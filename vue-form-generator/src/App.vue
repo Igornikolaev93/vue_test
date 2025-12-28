@@ -1,6 +1,21 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function openFormInNewTab() {
+  const routeUrl = router.resolve({
+    name: 'form',
+    query: { 
+      name: '',
+      email: '',
+      gender: '',
+      subscribe: '',
+      message: ''
+    }
+  })
+  window.open(routeUrl.href, '_blank')
+}
 </script>
 
 <template>
@@ -8,11 +23,11 @@ import HelloWorld from './components/HelloWorld.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Домашняя страница</RouterLink>
+        <a href="#" @click.prevent="openFormInNewTab">Открыть форму</a>
       </nav>
     </div>
   </header>
@@ -33,7 +48,6 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
   text-align: center;
   margin-top: 2rem;
 }
@@ -47,7 +61,8 @@ nav a.router-link-exact-active:hover {
 }
 
 nav a {
-  display: inline-block;
+  display: inline-flex;
+  font-size: 20px;
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
 }
